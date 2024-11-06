@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: rpn_webservice_database
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=admin
+      - DB_NAME=rpn_webservice_database
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=admin
+      - PORT=8080
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+
+
+volumes:
+  db_data:
