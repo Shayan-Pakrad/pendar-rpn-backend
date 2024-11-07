@@ -13,6 +13,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// Comment
+
 func main() {
 	// Initialize the database connection
 	db.InitDB()
